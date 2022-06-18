@@ -25,8 +25,11 @@ public class AvailabilityController {
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate
     ){
-
-            var availabilities = availabilityService.getAvailabilities(LocalDate.parse(startDate), LocalDate.parse(endDate));
+            if(startDate == null && endDate == null){
+                startDate = LocalDate.now().toString();
+                endDate = LocalDate.now().plusMonths(1).toString();
+            }
+            var availabilities = availabilityService.getAvailabilities(startDate, endDate);
         return new ResponseEntity<>(availabilities, HttpStatus.OK);
     }
 }
