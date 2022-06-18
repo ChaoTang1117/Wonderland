@@ -1,12 +1,10 @@
 package chao.wonderland.service;
 
 import chao.wonderland.bo.Reservation;
-import chao.wonderland.bo.User;
 import chao.wonderland.dto.ReservationDTO;
 import chao.wonderland.repository.AvailabilityRepository;
 import chao.wonderland.repository.ReservationRepository;
 import chao.wonderland.repository.UserRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.PersistenceException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -56,15 +53,21 @@ public class ReservationService {
     public void updateReservation(String bookingId, ReservationDTO dto){
         var arrivalDate = dto.getArrivalDate();
         var departureDate = dto.getDepartureDate();
-        var existingReservation = checkExistingBooking(bookingId);
+        var existingReservation = findExistingBooking(bookingId);
 
         validateReservationDates(arrivalDate, departureDate);
         //increase capacities for the previously booked dates
-        increaseCapacity(existingReservation.getArrivalDate(), existingReservation.getDepartureDate());
+        restoreCapacity(existingReservation.getArrivalDate(), existingReservation.getDepartureDate());
         //update reservation with the new date range
         reservationRepository.updateReservation(arrivalDate, departureDate, bookingId);
         //reduce capacities for the new dates
         reduceCapacity(arrivalDate, departureDate);
+    }
+
+    public void deleteReservation(String bookingId){
+        var existingReservation = findExistingBooking(bookingId);
+        restoreCapacity(existingReservation.getArrivalDate(), existingReservation.getDepartureDate());
+        reservationRepository.delete(existingReservation);
     }
 
     private void reduceCapacity(LocalDate arrivalDate, LocalDate departureDate){
@@ -74,7 +77,7 @@ public class ReservationService {
         }
     }
 
-    private void increaseCapacity(LocalDate arrivalDate, LocalDate departureDate){
+    private void restoreCapacity(LocalDate arrivalDate, LocalDate departureDate){
         var dateList = getAllDates(arrivalDate, departureDate);
         for(var date : dateList){
             availabilityRepository.increaseCapacity(date);
@@ -112,7 +115,7 @@ public class ReservationService {
     }
 
 
-    private Reservation checkExistingBooking(String bookingId){
+    private Reservation findExistingBooking(String bookingId){
         var existingReservation = reservationRepository.findReservation(bookingId);
         if(existingReservation == null) {
             log.error("Booking information cannot be found");

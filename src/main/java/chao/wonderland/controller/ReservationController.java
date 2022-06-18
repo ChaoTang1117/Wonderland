@@ -25,11 +25,19 @@ public class ReservationController {
     }
 
     @PutMapping("{bookingId}")
-    public ResponseEntity<String> updateReservation(
+    public ResponseEntity<String> modifyReservation(
             @PathVariable String bookingId,
             @RequestBody ReservationDTO dto
     ) {
         reservationService.updateReservation(bookingId, dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("{bookingId}")
+    public ResponseEntity<String> cancelReservation(
+            @PathVariable String bookingId
+    ) {
+        reservationService.deleteReservation(bookingId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
