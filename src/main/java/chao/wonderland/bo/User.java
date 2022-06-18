@@ -11,9 +11,6 @@ import javax.persistence.*;
 @Entity
 public class User {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer id;
     @Id
     @JsonIgnore
     @Column(name="user_id", updatable = false)

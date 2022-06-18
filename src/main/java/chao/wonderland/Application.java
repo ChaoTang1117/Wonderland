@@ -14,6 +14,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,11 +25,6 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-
-//			LocalDate startDate =  LocalDate.now();
-//			var newDate = startDate.datesUntil( LocalDate.of(2022,07,01)).collect(Collectors.toList());
-//			System.out.println("----date----" + newDate);
-
 		}
 
 

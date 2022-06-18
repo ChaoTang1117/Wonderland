@@ -1,6 +1,7 @@
 package chao.wonderland.controller;
 
 import chao.wonderland.bo.Reservation;
+import chao.wonderland.dto.ReservationDTO;
 import chao.wonderland.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,26 +9,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-//@RequestMapping("/reservations")
+@RequestMapping("/reservations")
 public class ReservationController {
 
     @Autowired
     private ReservationService reservationService;
 
-    @PostMapping(value="/reservations")
+    @PostMapping("{userId}")
     public ResponseEntity<String> createReservation(
-            @RequestBody Reservation reservation
+            @PathVariable String userId,
+            @RequestBody ReservationDTO dto
     ){
-        var reservationCreated = reservationService.CreateReservation(reservation);
+        var reservationCreated = reservationService.createReservation(userId, dto);
         return new ResponseEntity<>(reservationCreated.getBookingId(), HttpStatus.CREATED);
     }
 
-//    @GetMapping(value="/search")
-//    public ResponseEntity<Capacity> getAvailability(
-//            @RequestParam LocalDate startDate,
-//            @RequestParam LocalDate endDate
-//    ){
-//            var users = userRepository.find(userId);
-//        return new ResponseEntity<>(users, HttpStatus.OK);
-//    }
+    @PutMapping("{bookingId}")
+    public ResponseEntity<String> updateReservation(
+            @PathVariable String bookingId,
+            @RequestBody ReservationDTO dto
+    ) {
+        reservationService.updateReservation(bookingId, dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
