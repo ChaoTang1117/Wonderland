@@ -1,6 +1,7 @@
 package chao.wonderland.bo;
 
 //import com.sun.istack.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,15 +15,13 @@ public class User {
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Integer id;
     @Id
+    @JsonIgnore
     @Column(name="user_id", updatable = false)
-//    @NotNull
     private String userId;
 
-//    @NotNull
     @Column(name="last_name")
     private String lastName;
 
-//    @NotNull
     @Column(name="first_name")
     private String firstName;
 

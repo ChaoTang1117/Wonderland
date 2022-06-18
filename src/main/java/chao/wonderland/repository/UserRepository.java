@@ -10,9 +10,11 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.LockModeType;
 import java.util.List;
 
-public interface  UserRepository extends JpaRepository<User, Integer> {
+public interface  UserRepository extends JpaRepository<User, String> {
 
 //    @Lock(LockModeType.PESSIMISTIC_READ)
     @Query(value = "SELECT u FROM User u WHERE u.userId = ?1 ")
     User find(String userId);
+
+
 }
