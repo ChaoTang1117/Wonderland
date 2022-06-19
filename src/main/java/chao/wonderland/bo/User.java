@@ -1,10 +1,16 @@
 package chao.wonderland.bo;
 
 //import com.sun.istack.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
 @Data
 @Table(name= "user_info")
@@ -23,6 +29,7 @@ public class User {
     private String firstName;
 
     @Column(name="email_address")
+    @Email(message="invalid email format")
     private String emailAddress;
 
 

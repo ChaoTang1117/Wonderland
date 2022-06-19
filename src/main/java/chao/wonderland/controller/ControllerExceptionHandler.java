@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -27,8 +28,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(PersistenceException.class)
     public final ResponseEntity<ErrorHeaderDTO> handlePersistenceException(
             PersistenceException ex, HttpServletRequest request) {
-        log.error("persistence exception ------ " + ex);
-        log.error("persistence exception msg ------ " + ex.getMessage());
         var errorHeader = new ErrorHeaderDTO("400",
                 ex.getMessage(),
                 null);
@@ -36,11 +35,20 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    public ResponseEntity<Object> handleHttpMessageNotReadable(
+    public final ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        var errorHeader =  new ErrorHeaderDTO("400", "Invalid value format found",
+        var errorHeader =  new ErrorHeaderDTO("400", "mal-formatted value found",
                         null );
+        return new ResponseEntity<>(errorHeader, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public final ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        var errorHeader =
+                new ErrorHeaderDTO("400", Objects.requireNonNull(ex.getFieldError()).getDefaultMessage(), null);
         return new ResponseEntity<>(errorHeader, HttpStatus.BAD_REQUEST);
     }
 

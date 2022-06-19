@@ -57,7 +57,7 @@ public class ReservationService {
 
         validateReservationDates(arrivalDate, departureDate);
         //increase capacities for the previously booked dates
-        restoreCapacity(existingReservation.getArrivalDate(), existingReservation.getDepartureDate());
+        increaseCapacity(existingReservation.getArrivalDate(), existingReservation.getDepartureDate());
         //update reservation with the new date range
         reservationRepository.updateReservation(arrivalDate, departureDate, bookingId);
         //reduce capacities for the new dates
@@ -66,7 +66,7 @@ public class ReservationService {
 
     public void deleteReservation(String bookingId){
         var existingReservation = findExistingBooking(bookingId);
-        restoreCapacity(existingReservation.getArrivalDate(), existingReservation.getDepartureDate());
+        increaseCapacity(existingReservation.getArrivalDate(), existingReservation.getDepartureDate());
         reservationRepository.delete(existingReservation);
     }
 
@@ -77,7 +77,7 @@ public class ReservationService {
         }
     }
 
-    private void restoreCapacity(LocalDate arrivalDate, LocalDate departureDate){
+    private void increaseCapacity(LocalDate arrivalDate, LocalDate departureDate){
         var dateList = getAllDates(arrivalDate, departureDate);
         for(var date : dateList){
             availabilityRepository.increaseCapacity(date);
