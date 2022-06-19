@@ -37,13 +37,13 @@ public class Application implements CommandLineRunner {
 		//concurrently call create Reservation api 40 times with date range 2022-07-08 to 2022-07-09
 		//initially date 2022-07-08 and date 2022-07-09 have capacity of 1000 people
 		//after the calls, both date should have 900 capacities.
-		for (int i = 0; i < 100; i++) {
-			allFutures.add(asyncService.callMsgService("2022-07-08", "2022-07-09"));
-		}
-		CompletableFuture.allOf(allFutures.toArray(new CompletableFuture[0])).join();
-		for (int i = 0; i < 100; i++) {
-			System.out.println("response: " + allFutures.get(i).get());
-		}
+//		for (int i = 0; i < 100; i++) {
+//			allFutures.add(asyncService.callMsgService("2022-07-08", "2022-07-09"));
+//		}
+//		CompletableFuture.allOf(allFutures.toArray(new CompletableFuture[0])).join();
+//		for (int i = 0; i < 100; i++) {
+//			System.out.println("response: " + allFutures.get(i).get());
+//		}
 
 
 //------------------------------------------------------------------------------------------

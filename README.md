@@ -63,12 +63,27 @@ Once user created a reservation, the user is able to cancel the reservation with
 - Method: PUT
 - Path Variable: bookingId (UUID)
 - Request body:
-- ```javascript
+```javascript
   {
   "arrivalDate": "2022-06-19",
   "departureDate": "2022-06-19"
   }
 ```
 
-####Database Design:
+#### Database Design:
+The project uses H2 embedded in-memory relational database integrated with Spring Boot.
+- availability_info
+    - date: Date(Primary Key)
+    - capacity: VarChar
 
+- user_info
+    - user_id: VarChar UUID(Primary Key)
+    - last_name: VarChar
+    - first_name: VarChar
+    - email: VarChar
+
+- reservation
+    - booking_id: VarChar UUID(Primary Key)
+    - user_id: VarChar
+    - arrival_date: Date
+    - departure_date: Date
