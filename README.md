@@ -9,14 +9,14 @@ The service is able to handle concurrent requests and large volume of requests.
 
 ### Detail:
 
-####Use Case: Search campsite availability
+#### Use Case: Search campsite availability
 Users can search what date(s) the campsite is available for visiting.
 - Endpoint: /search
 - Method: GET
 - Parameter: startDate, endDate
 
 
-####Use Case: User registration
+#### Use Case: User registration
 Before making reservation, Users should firstly register themselves to the campsite by providing their information
 - Endpoint: /registrations
 - Method: POST
@@ -30,7 +30,7 @@ Before making reservation, Users should firstly register themselves to the camps
  ```
 - Response: userId (UUID)
 
-####Use Case: Create Reservation
+#### Use Case: Create Reservation
 After user is registered, the user is able to make a reservation with their intended arrival date and departure date
 - Endpoint: /reservations
 - Method: POST
@@ -44,7 +44,7 @@ After user is registered, the user is able to make a reservation with their inte
 ```
 - Response: bookingId (UUID)
 
-####Use Case: Modify Reservation
+#### Use Case: Modify Reservation
 Once user created a reservation, the user is able to change the reservation with a new arrival date and departure date as long as the capacity is allowed
 - Endpoint: /reservations
 - Method: PUT
@@ -57,7 +57,7 @@ Once user created a reservation, the user is able to change the reservation with
   }
 ```
 
-####Use Case: Cancel Reservation
+#### Use Case: Cancel Reservation
 Once user created a reservation, the user is able to cancel the reservation with a new arrival date and departure date as long as the capacity is allowed
 - Endpoint: /reservations
 - Method: PUT
@@ -70,5 +70,5 @@ Once user created a reservation, the user is able to cancel the reservation with
   }
 ```
 
-####Database Design:
+#### Database Design:
 
