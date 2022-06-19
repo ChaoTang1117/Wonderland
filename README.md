@@ -75,6 +75,7 @@ The project uses H2 embedded in-memory relational database integrated with Sprin
     - date: Date(Primary Key)
     - capacity: VarChar
 
+
 - user_info
     - user_id: VarChar UUID(Primary Key)
     - last_name: VarChar
