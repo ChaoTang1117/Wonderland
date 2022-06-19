@@ -33,20 +33,20 @@ public class Application implements CommandLineRunner {
 
 		List<CompletableFuture<String>> allFutures = new ArrayList<>();
 
-		//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 		//concurrently call create Reservation api 40 times with date range 2022-07-08 to 2022-07-09
 		//initially date 2022-07-08 and date 2022-07-09 have capacity of 1000 people
 		//after the calls, both date should have 900 capacities.
-//		for (int i = 0; i < 100; i++) {
-//			allFutures.add(asyncService.callMsgService("2022-07-08", "2022-07-09"));
-//		}
-//		CompletableFuture.allOf(allFutures.toArray(new CompletableFuture[0])).join();
-//		for (int i = 0; i < 100; i++) {
-//			System.out.println("response: " + allFutures.get(i).get());
-//		}
+		for (int i = 0; i < 100; i++) {
+			allFutures.add(asyncService.callMsgService("2022-07-08", "2022-07-09"));
+		}
+		CompletableFuture.allOf(allFutures.toArray(new CompletableFuture[0])).join();
+		for (int i = 0; i < 100; i++) {
+			System.out.println("response: " + allFutures.get(i).get());
+		}
 
 
-		//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 		//concurrently call create Reservation api 5 times with date range 2022-07-04 to 2022-07-05
 		//initially date 2022-07-04 and date 2022-07-05 have capacity of 1000 people and 1
 		//after the calls, only 1 reservation should be created and all subsequent call should fail
@@ -59,13 +59,13 @@ public class Application implements CommandLineRunner {
 //		}
 
 
-		//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 		//concurrently call create Reservation api 1000000 times with date 2022-07-18
 		//result takes around 20 minutes.
-		for (int i = 0; i < 1000000; i++) {
-			allFutures.add(asyncService.callMsgService("2022-07-18", "2022-07-18"));
-		}
-		CompletableFuture.allOf(allFutures.toArray(new CompletableFuture[0])).join();
+//		for (int i = 0; i < 1000000; i++) {
+//			allFutures.add(asyncService.callMsgService("2022-07-18", "2022-07-18"));
+//		}
+//		CompletableFuture.allOf(allFutures.toArray(new CompletableFuture[0])).join();
 
 
 
