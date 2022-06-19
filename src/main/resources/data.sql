@@ -1,3 +1,6 @@
+insert into user_info(user_id, last_name, first_name, email_address)
+values('ca445520-9c17-48fa-bdc8-c6396a41a7f5', 'chao', 'tang', 'chao@hotmail.com');
+
 insert into availability_info(date, capacity)
 values('2022-07-01',0);
 insert into availability_info(date, capacity)
@@ -33,7 +36,7 @@ values('2022-07-16',1000);
 insert into availability_info(date, capacity)
 values('2022-07-17',1000);
 insert into availability_info(date, capacity)
-values('2022-07-18',1000);
+values('2022-07-18',1000000);
 insert into availability_info(date, capacity)
 values('2022-07-19',1000);
 insert into availability_info(date, capacity)

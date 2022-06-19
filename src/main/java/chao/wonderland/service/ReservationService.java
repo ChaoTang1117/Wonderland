@@ -40,8 +40,6 @@ public class ReservationService {
 
         //check non existing user
         checkExistingUser(userId);
-
-
         validateReservationDates(arrivalDate, departureDate);
         reservation.setBookingId(UUID.randomUUID().toString());
         reservation.setUserId(userId);
