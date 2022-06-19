@@ -69,7 +69,6 @@ Once user created a reservation, the user is able to cancel the reservation with
   "departureDate": "2022-06-19"
   }
 ```
-
 #### Database Design:
 The project uses H2 embedded in-memory relational database integrated with Spring Boot.
 - availability_info
