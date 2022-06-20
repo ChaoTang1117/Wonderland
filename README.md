@@ -10,6 +10,11 @@ In a real world environment, requests can be lost during http calls if the servi
 In this case, kafka can be incorporated to temporarily store the requests. Different HTTP method calls can be published to a separate kafka topic and then read by consumer and store into the dbs.
 
 
+### How to test
+The project is swagger enabled. After starting the application, all the endpoints can be accessed through swagger UI :http://localhost:8080/swagger-ui/index.html#/
+To access database, use url: http://localhost:8080/h2console/
+The database is H2 Embedded. JDBC url should be jdbc:h2:mem:testdb as defined in application.properties
+
 ### Detail:
 
 #### Use Case: Search campsite availability
