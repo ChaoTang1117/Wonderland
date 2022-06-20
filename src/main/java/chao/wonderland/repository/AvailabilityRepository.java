@@ -16,7 +16,7 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Stri
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT a FROM Availability AS a " +
             "WHERE a.date BETWEEN ?1 AND ?2 AND a.capacity > 0")
-    List<Availability> findAllAvailabilitiesInDateRange(String startDate, String endDate);
+    List<Availability> findAllAvailabilitiesInDateRange(LocalDate startDate, LocalDate endDate);
 
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "SELECT count(*) FROM Availability AS a " +

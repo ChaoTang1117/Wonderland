@@ -2,12 +2,10 @@ package chao.wonderland.repository;
 
 import chao.wonderland.bo.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.persistence.LockModeType;
 import java.time.LocalDate;
 
 public interface ReservationRepository extends JpaRepository<Reservation, String> {
@@ -17,7 +15,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, String
     Reservation findReservation(@Param("bookingId") String bookingId);
 
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Modifying
     @Query(value = "UPDATE reservation r set r.arrival_date = :startDate " +
             ", r.departure_date = :endDate " +

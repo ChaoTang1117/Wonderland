@@ -18,7 +18,7 @@ public class AvailabilityService {
     @Autowired
     private AvailabilityRepository availabilityRepository;
 
-    public List<Availability> getAvailabilities(String startDate, String endDate){
+    public List<Availability> getAvailabilities(LocalDate startDate, LocalDate endDate){
         return availabilityRepository.findAllAvailabilitiesInDateRange(startDate, endDate);
     }
 }

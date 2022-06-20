@@ -6,17 +6,20 @@ This project is designed for a tourist campsite by providing RESTful API to mana
 Users can register their information, search for campsite availability, make a reservation, modify an existing reservation and cancel the reservation.
 Constraints are introduced to validate reservation logics.
 The service is able to handle concurrent requests and large volume of requests.
+In a real world environment, requests can be lost during http calls if the service is down immediately after triggering the requests.
+In this case, kafka can be incorporated to temporarily store the requests. Different HTTP method calls can be published to a separate kafka topic and then read by consumer and store into the dbs.
+
 
 ### Detail:
 
-####Use Case: Search campsite availability
+#### Use Case: Search campsite availability
 Users can search what date(s) the campsite is available for visiting.
 - Endpoint: /search
 - Method: GET
 - Parameter: startDate, endDate
 
 
-####Use Case: User registration
+#### Use Case: User registration
 Before making reservation, Users should firstly register themselves to the campsite by providing their information
 - Endpoint: /registrations
 - Method: POST
@@ -30,7 +33,7 @@ Before making reservation, Users should firstly register themselves to the camps
  ```
 - Response: userId (UUID)
 
-####Use Case: Create Reservation
+#### Use Case: Create Reservation
 After user is registered, the user is able to make a reservation with their intended arrival date and departure date
 - Endpoint: /reservations
 - Method: POST
@@ -44,7 +47,7 @@ After user is registered, the user is able to make a reservation with their inte
 ```
 - Response: bookingId (UUID)
 
-####Use Case: Modify Reservation
+#### Use Case: Modify Reservation
 Once user created a reservation, the user is able to change the reservation with a new arrival date and departure date as long as the capacity is allowed
 - Endpoint: /reservations
 - Method: PUT
@@ -57,7 +60,7 @@ Once user created a reservation, the user is able to change the reservation with
   }
 ```
 
-####Use Case: Cancel Reservation
+#### Use Case: Cancel Reservation
 Once user created a reservation, the user is able to cancel the reservation with a new arrival date and departure date as long as the capacity is allowed
 - Endpoint: /reservations
 - Method: PUT
@@ -71,6 +74,7 @@ Once user created a reservation, the user is able to cancel the reservation with
 ```
 #### Database Design:
 The project uses H2 embedded in-memory relational database integrated with Spring Boot.
+
 - availability_info
     - date: Date(Primary Key)
     - capacity: VarChar

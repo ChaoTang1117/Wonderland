@@ -25,18 +25,25 @@ public class AvailabilityController {
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate
     ){
-
+            LocalDate arrivalDate = null;
+            LocalDate departureDate = null;
             if(startDate == null && endDate == null){
-                startDate = LocalDate.now().toString();
-                endDate = LocalDate.now().plusMonths(1).toString();
+                arrivalDate = LocalDate.now();
+                departureDate = LocalDate.now().plusMonths(1);
             }
             else if(startDate != null && endDate == null){
-                endDate = (LocalDate.parse(startDate).plusMonths(1)).toString();
+                arrivalDate = LocalDate.parse(startDate);
+                departureDate = arrivalDate.plusMonths(1);
 ;            }
             else if(startDate == null){
-                startDate = (LocalDate.parse(endDate).minusMonths(1)).toString();
+                departureDate = LocalDate.parse(endDate);
+                arrivalDate = departureDate.minusMonths(1);
+            } else{
+                arrivalDate = LocalDate.parse(startDate);
+                departureDate = LocalDate.parse(endDate);
             }
-            var availabilities = availabilityService.getAvailabilities(startDate, endDate);
+
+            var availabilities = availabilityService.getAvailabilities(arrivalDate, departureDate);
         return new ResponseEntity<>(availabilities, HttpStatus.OK);
     }
 }
